@@ -4,17 +4,12 @@ package org.chris.common.mq.mover.service.impl;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.GetResponse;
 import lombok.extern.slf4j.Slf4j;
-import org.chris.common.mq.mover.domain.MoveInfo;
+import org.chris.common.mq.mover.domain.bo.MoveInfo;
 import org.chris.common.mq.mover.service.IMoveService;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Lookup;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-
-import javax.annotation.Resource;
 
 /**
  * @author caizq
@@ -27,7 +22,7 @@ public class CommonMoverServiceImpl implements IMoveService {
      * prototype注入
      * @return
      */
-    @Lookup
+    @Lookup("commonMQConnectionFactory")
     public ConnectionFactory getConnectionFactory(){
         return null;
     }

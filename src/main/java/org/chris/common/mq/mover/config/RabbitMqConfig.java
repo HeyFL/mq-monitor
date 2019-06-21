@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Scope;
 
 /**
@@ -31,6 +32,7 @@ public class RabbitMqConfig {
      * @return
      */
     @Bean
+    //@Primary
     @Scope("prototype")
     public ConnectionFactory commonMQConnectionFactory(
             @Value("${spring.rabbitmq.default.addresses}") String addresses,

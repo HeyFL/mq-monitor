@@ -1,6 +1,6 @@
 package org.chris.common.mq.mover.service;
 
-import org.chris.common.mq.mover.domain.MoveInfo;
+import org.chris.common.mq.mover.domain.bo.MoveInfo;
 
 /**
  * @author caizq

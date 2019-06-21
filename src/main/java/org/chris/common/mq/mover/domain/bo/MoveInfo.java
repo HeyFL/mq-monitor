@@ -1,5 +1,5 @@
 
-package org.chris.common.mq.mover.domain;
+package org.chris.common.mq.mover.domain.bo;
 
 import lombok.Data;
 
