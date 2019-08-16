@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -57,33 +58,29 @@ public class MqMonitorServiceImpl implements IMqMonitorService, ApplicationConte
     }
 
     @Override
-    public List<QueueWarnInfo> getAllQueueCurrentInfo() {
+    public List<String> getAllQueueCurrentInfoAndDoWarnIfNecessary() {
         List<MonitorQueue> monitorQueueList = monitorQueueMapper.findByAll(null);
         if (CollectionUtils.isEmpty(monitorQueueList)) {
             return new ArrayList<>();
         }
 
         //根据数据库配置  检查所有被监控的队列当前存在的消息数
-        List<QueueWarnInfo> result = getQueueWarnInfos(monitorQueueList);
+        List<QueueWarnInfo> monitorQueue = getMonitorQueueWarnInfos(monitorQueueList);
+
+        if (CollectionUtils.isEmpty(monitorQueue)) {
+            return Collections.EMPTY_LIST;
+        }
 
         //根据需要  发送提醒给对应的人
+        List<String> warnMsgs = warningService.getWarnMsg(monitorQueue);
         if (Boolean.TRUE.equals(needWarn)) {
-            doWarning(result);
+            warningService.doWarn(warnMsgs);
         }
-        return result;
+        return warnMsgs;
     }
 
-    private void doWarning(List<QueueWarnInfo> result) {
-        if (CollectionUtils.isEmpty(result)) {
-            return;
-        }
 
-        for (QueueWarnInfo queue : result) {
-            warningService.warn(queue);
-        }
-    }
-
-    private List<QueueWarnInfo> getQueueWarnInfos(List<MonitorQueue> monitorQueueList) {
+    private List<QueueWarnInfo> getMonitorQueueWarnInfos(List<MonitorQueue> monitorQueueList) {
         List<QueueWarnInfo> result = new LinkedList<>();
         for (MonitorQueue monitorQueue : monitorQueueList) {
             ConnectionFactory connectionFactory = getConnectionFactory(monitorQueue);

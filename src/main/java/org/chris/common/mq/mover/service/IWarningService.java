@@ -2,6 +2,8 @@ package org.chris.common.mq.mover.service;
 
 import org.chris.common.mq.mover.domain.bo.QueueWarnInfo;
 
+import java.util.List;
+
 /**
  * @author caizq
  * @date 2019/6/18
@@ -10,7 +12,9 @@ import org.chris.common.mq.mover.domain.bo.QueueWarnInfo;
 public interface IWarningService {
     /**
      *
-     * @param queue
+     * @param queueWarnInfoList
      */
-    void warn(QueueWarnInfo queue);
+    List<String> getWarnMsg(List<QueueWarnInfo> queueWarnInfoList);
+
+    void doWarn(List<String> warnMsgs);
 }

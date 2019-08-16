@@ -1,7 +1,6 @@
 package org.chris.common.mq.mover.service;
 
 import org.chris.common.mq.mover.domain.bo.QueueInfo;
-import org.chris.common.mq.mover.domain.bo.QueueWarnInfo;
 
 import java.util.List;
 
@@ -22,5 +21,5 @@ public interface IMqMonitorService {
     /**
      * @return
      */
-    List<QueueWarnInfo> getAllQueueCurrentInfo();
+    List<String> getAllQueueCurrentInfoAndDoWarnIfNecessary();
 }
